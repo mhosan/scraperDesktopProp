@@ -1,3 +1,5 @@
+import time
+import random
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 
@@ -7,15 +9,29 @@ url2 = 'https://www.disco.com.ar/leche?_q=leche&map=ft'
 s = Service('./chromedriver.exe')
 options = webdriver.ChromeOptions()
 options.add_argument('--incognito')
+#options.add_argument('--headless')
 driver = webdriver.Chrome(service=s, options=options)
+#driver.minimize_window()
 
-#driver.maximize_window()
 driver.get(url2)
-print(f'Driver title: {driver.title}')
-listaProductos = driver.find_elements_by_xpath('//div[contains(@id,"gallery-layout-container")]//span[contains(@class,"vtex-product-summary-2-x-productBrand")]')
-print('*' * 50)
-print(f'Lista de productos: {listaProductos}')
-producto = listaProductos[0]
+driver.implicitly_wait(20)
+print(f'Driver title: {driver.title} (ya terminé de esperar...)')
+
+listaDescripcionesDeProductos = driver.find_elements_by_xpath('//div[contains(@id,"gallery-layout-container")]//span[contains(@class,"vtex-product-summary-2-x-productBrand")]')
+#time.sleep(random.uniform(8.0, 10.0))
+
+listaPreciosDeProductos = driver.find_elements_by_xpath('//div[contains(@id,"gallery-layout-container")]//a[@draggable="false"]//div[@class="contenedor-precio"]/span')
+print('*' * 70)
+if len(listaDescripcionesDeProductos) == len(listaPreciosDeProductos):
+    for i in range(len(listaDescripcionesDeProductos)):
+        print(f'{listaDescripcionesDeProductos[i].text} - {listaPreciosDeProductos[i].text}')
+else:
+    print('No coinciden cantidades de listas')
+print('*' * 70)
+
+"""
+print(f'Lista de productos: {listaDescripcionesDeProductos}')
+producto = listaDescripcionesDeProductos[1]
 print('*' * 50)
 print(f'descripción: {producto.text}')
 innerHtml = producto.get_attribute('innerHTML')
@@ -24,13 +40,21 @@ print(f'inner lhtml: {innerHtml}')
 outerHtml = producto.get_attribute('outerHTML')
 print('*' * 50)
 print(f'outer html: {outerHtml}')
-#precio = algo.find_elements_by_xpath('.//a[@draggable="false"]//div[@class="contenedor-precio"]/span[0]')
-#precio = producto.find_element_by_xptah('//div[contains(@id,"gallery-layout-container")]//article[contains(@class,"vtex-product-summary-2-x-element")]//span[contains(@class,"vtex-product-summary-2-x-productBrand")]').get_attribute("innerHTML")
-#vuelos = driver.find_elements_by_xpath('//li[@class="sc-hZeNU czUTzo"]')
-#vuelo = vuelos[0]
-#hora = vuelo.find_element_by_xpath('.//span[@class="sc-kkwfeq hZlYEC"]').text
-#print(f'Hora: {hora}')
+print(f'Lista de precios: {listaPreciosDeProductos}')
+precio = listaPreciosDeProductos[0]
+print('*' * 50)
+print(f'precio: {precio.text}')
+"""
 
+"""
+vuelos = driver.find_elements_by_xpath('//li[@class="sc-hZeNU czUTzo"]')
+print('*' * 50)
+vuelo = vuelos[0]
+hora = vuelo.find_element_by_xpath('.//span[@class="sc-kkwfeq hZlYEC"]').text
+print(f'Hora: {hora}')
+print(f'el atributo es: {vuelo.text}')
+print(f'el tipo de vuelo es: {type(vuelo)}')
+"""
 
 driver.quit()
 
