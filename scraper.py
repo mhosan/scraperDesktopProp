@@ -7,18 +7,25 @@ url2 = 'https://www.disco.com.ar/leche?_q=leche&map=ft'
 s = Service('./chromedriver.exe')
 options = webdriver.ChromeOptions()
 options.add_argument('--incognito')
-
 driver = webdriver.Chrome(service=s, options=options)
+
 #driver.maximize_window()
 driver.get(url2)
 print(f'Driver title: {driver.title}')
-listaProductos = driver.find_elements_by_xpath('//div[contains(@id,"gallery-layout-container")]//span[contains(@class,"vtex-product-summary-2-x-productBrand")]/text()')
+listaProductos = driver.find_elements_by_xpath('//div[contains(@id,"gallery-layout-container")]//span[contains(@class,"vtex-product-summary-2-x-productBrand")]')
 print('*' * 50)
 print(f'Lista de productos: {listaProductos}')
-#producto = listaProductos[0]
-#descripcion = producto.find_elements_by_xptah('//span[contains(@class,"vtex-product-summary-2-x-productBrand")]/text()')
-#print(f'descripción: {descripcion}')
-
+producto = listaProductos[0]
+print('*' * 50)
+print(f'descripción: {producto.text}')
+innerHtml = producto.get_attribute('innerHTML')
+print('*' * 50)
+print(f'inner lhtml: {innerHtml}')
+outerHtml = producto.get_attribute('outerHTML')
+print('*' * 50)
+print(f'outer html: {outerHtml}')
+#precio = algo.find_elements_by_xpath('.//a[@draggable="false"]//div[@class="contenedor-precio"]/span[0]')
+#precio = producto.find_element_by_xptah('//div[contains(@id,"gallery-layout-container")]//article[contains(@class,"vtex-product-summary-2-x-element")]//span[contains(@class,"vtex-product-summary-2-x-productBrand")]').get_attribute("innerHTML")
 #vuelos = driver.find_elements_by_xpath('//li[@class="sc-hZeNU czUTzo"]')
 #vuelo = vuelos[0]
 #hora = vuelo.find_element_by_xpath('.//span[@class="sc-kkwfeq hZlYEC"]').text
