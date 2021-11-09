@@ -15,15 +15,11 @@ driver = webdriver.Chrome(service=s, options=options)
 #driver.minimize_window()
 
 driver.get(url2)
-driver.implicitly_wait(50)
+driver.implicitly_wait(30)
 print(f'Driver title: {driver.title}')
 
 #Disco:
-#listaDescripcionesDeProductos = driver.find_elements_by_xpath('//div[contains(@id,"gallery-layout-container")]//span[contains(@class,"vtex-product-summary-2-x-productBrand")]')
-#listaDeProductos = driver.find_elements_by_xpath('//div[@id="gallery-layout-container"]')
-#listaDeProductos = driver.find_elements_by_xpath('//div[@id="gallery-layout-container"]//div[@style="flex-basis: 25%; max-width: 25%;"]')
 listaDeProductos = driver.find_elements_by_xpath('//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]')
-#listaDeProductos = driver.find_elements_by_xpath('//div[@id="gallery-layout-container" and @class="vtex-search-result-3-x-gallery vtex-search-result-3-x-gallery--grid flex flex-row flex-wrap items-stretch bn ph1 na4 pl9-l"]')
 print('\n')
 print('=' * 70)
 print(f'La cantidad de productos leidos es: {len(listaDeProductos)}')
@@ -31,51 +27,11 @@ print('=' * 70)
 print('\n')
 print('*' * 70)
 for producto in listaDeProductos:
-    print('--->', producto.text)
-    print('-' * 70)
-print('*' * 70)
-
-
-
-"""
-print('=' * 70)
-for producto in listaDeProductos:
     descripcion = producto.find_element_by_xpath('.//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]').text
     precio = producto.find_element_by_xpath('.//div[@class="contenedor-precio"]/span').text
-    print(f'descripcion: {descripcion}, precio: {precio}')
-print('=' * 70)
-"""
-
-#Disco
-#listaPreciosDeProductos = driver.find_elements_by_xpath('//div[contains(@id,"gallery-layout-container")]//a[@draggable="false"]//div[@class="contenedor-precio"]/span')
-#Dia:
-#listaUrlsDeProductos = driver.find_elements_by_xpath('//div[@class="prateleira vitrine n1colunas"]//a[@class="product-image"]/@href')
-#print('*' * 70)
-
-"""
-if len(listaDescripcionesDeProductos) == len(listaPreciosDeProductos):
-    for i in range(len(listaDescripcionesDeProductos)):
-        print(f'{listaDescripcionesDeProductos[i].text} - {listaPreciosDeProductos[i].text}')
-else:
-    print('No coinciden cantidades de listas')
+    print(F'Descripcion: {descripcion}, {precio}')
+    print('-' * 70)
 print('*' * 70)
-"""
-"""
-print(f'Lista de productos: {listaDescripcionesDeProductos}')
-producto = listaDescripcionesDeProductos[1]
-print('*' * 50)
-print(f'descripción: {producto.text}')
-innerHtml = producto.get_attribute('innerHTML')
-print('*' * 50)
-print(f'inner lhtml: {innerHtml}')
-outerHtml = producto.get_attribute('outerHTML')
-print('*' * 50)
-print(f'outer html: {outerHtml}')
-print(f'Lista de precios: {listaPreciosDeProductos}')
-precio = listaPreciosDeProductos[0]
-print('*' * 50)
-print(f'precio: {precio.text}')
-"""
 
 """
 vuelos = driver.find_elements_by_xpath('//li[@class="sc-hZeNU czUTzo"]')
