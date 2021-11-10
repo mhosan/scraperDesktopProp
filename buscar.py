@@ -6,7 +6,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from persisteDatos import guardarDatos 
+import persisteDatos 
 
 def buscar(url, driver, supermercado):
     if supermercado == "Wallmart":
@@ -44,5 +44,5 @@ def buscar(url, driver, supermercado):
             print(F'Descripcion: {descripcion}, {precio}')
             print('-' * 70)
             data = {'supermercado': supermercado, 'fecha': fechaISO, 'descripcion': descripcion, 'precio': precio}
-            guardarDatos(data, supermercado)
+            persisteDatos.guardaDatos(data, supermercado)
         print('*' * 70)
