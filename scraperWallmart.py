@@ -7,6 +7,6 @@ urls = ['https://www.walmart.com.ar/buscar?text=yerba',
         'https://www.walmart.com.ar/buscar?text=leche'
 ]
 for url in urls:
-    buscar.buscar(url, driver)
+    buscar.buscar(url, driver, "Wallmart")
 
 driver.quit()
