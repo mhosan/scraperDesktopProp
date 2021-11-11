@@ -1,8 +1,6 @@
 from datetime import datetime
 from pymongo import MongoClient
-import pymongo 
 from pathlib import Path
-import certifi
 
 #conexión:
 con = MongoClient('localhost',27017)  #conexión local
