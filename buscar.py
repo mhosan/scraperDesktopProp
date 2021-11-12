@@ -13,7 +13,13 @@ def buscar(url, driver, supermercado):
         productoTestigo = '//ul//li/div[@class="prateleira__item price-checked"]//div[@class="prateleira__content"]//a[@class="prateleira__name"]' 
         listadoDeProductos = '//ul//li/div[@class="prateleira__item price-checked"]'
         descripcionProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__name"]'
-        precioProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__price"]/span[@class="prateleira__best-price originalBestPrice"]' 
+        precioProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__price"]/span[@class="prateleira__best-price originalBestPrice"]'
+    if supermercado == "Disco":
+        productoTestigo ='//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+        listadoDeProductos = '//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]'
+        descripcionProducto = './/div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+        precioProducto = './/div[@class="contenedor-precio"]/span'
+
     #driver.minimize_window()
     xpathBuscar = productoTestigo
     #driver.set_page_load_timeout(30)
@@ -43,6 +49,6 @@ def buscar(url, driver, supermercado):
             precio = producto.find_element_by_xpath(precioProducto).text
             print(F'Descripcion: {descripcion}, {precio}')
             print('-' * 70)
-            data = {'supermercado': supermercado, 'fecha': fechaISO, 'descripcion': descripcion, 'precio': precio}
+            data = {'supermercado': supermercado, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
             persisteDatos.guardaDatos(data, supermercado)
         print('*' * 70)

@@ -9,7 +9,7 @@ con = MongoClient('localhost',27017)  #conexión local
 #ca = Path(certifi.where())
 #ca = certifi.where()
 #con = MongoClient("mongodb+srv://admin:Ostruca1203@cluster0.rsnsq.mongodb.net/datosprueba?retryWrites=true&w=majority", tlsCaFile=ca)
-con = MongoClient('mongodb+srv://admin:Ostruca1203@cluster0.rsnsq.mongodb.net/datosprueba?retryWrites=true&w=majority')
+#con = MongoClient('mongodb+srv://admin:Ostruca1203@cluster0.rsnsq.mongodb.net/datosprueba?retryWrites=true&w=majority')
 db = con.datosprueba
 super = db.supermercados
 
