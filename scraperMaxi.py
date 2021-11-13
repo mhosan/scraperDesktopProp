@@ -4,7 +4,7 @@ import time
 
 driver = driver.seteoDriver()
 
-urls = ['https://www.vea.com.ar/leche?map=ft',
+urlsOri = ['https://www.vea.com.ar/leche?map=ft',
            'https://www.vea.com.ar/yerba?map=ft',
            'https://www.vea.com.ar/azucar?map=ft',
            'https://www.vea.com.ar/galletitas?map=ft',
@@ -13,10 +13,10 @@ urls = ['https://www.vea.com.ar/leche?map=ft',
            'https://www.vea.com.ar/shampoo?map=ft',
            'https://www.vea.com.ar/pollo?map=ft'
            ]
-urlsTest = ['https://www.vea.com.ar/leche?map=ft'
+urls = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=leche'
         ]
 
 for url in urls:
-    buscar.buscar(url, driver, "Vea")
+    buscar.buscar(url, driver, "Maxiconsumo")
     time.sleep(5)
 # driver.quit()
