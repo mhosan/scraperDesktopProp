@@ -3,8 +3,7 @@ import driver
 
 driver = driver.seteoDriver()
 
-urls = ['https://www.walmart.com.ar/buscar?text=leche',
-    'https://www.walmart.com.ar/buscar?text=yerba',
+urls = ['https://www.walmart.com.ar/buscar?text=yerba',
     'https://www.walmart.com.ar/buscar?text=azucar',
     'https://www.walmart.com.ar/buscar?text=galletitas',
     'https://www.walmart.com.ar/buscar?text=gaseosas',
