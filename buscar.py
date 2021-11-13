@@ -13,36 +13,53 @@ def buscar(url, driver, supermercado):
         productoTestigo = '//ul//li/div[@class="prateleira__item price-checked"]//div[@class="prateleira__content"]//a[@class="prateleira__name"]' 
         listadoDeProductos = '//ul//li/div[@class="prateleira__item price-checked"]'
         descripcionProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__name"]'
-        precioProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__price"]/span[@class="prateleira__best-price originalBestPrice"]' 
+        precioProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__price"]/span[@class="prateleira__best-price originalBestPrice"]'
+    if supermercado == "Disco":
+        productoTestigo ='//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+        listadoDeProductos = '//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]'
+        descripcionProducto = './/div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+        precioProducto = './/div[@class="contenedor-precio"]/span'
+    if supermercado == "Vea":
+        productoTestigo ='//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+        listadoDeProductos = '//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]'
+        descripcionProducto = './/div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+        precioProducto = './/div[@class="contenedor-precio"]/span'
+
     #driver.minimize_window()
     xpathBuscar = productoTestigo
     #driver.set_page_load_timeout(30)
     try:
         driver.get(url)
+        with open(f'paginaVeaLeche.txt', 'w', encoding='utf-8') as f:
+                f.write(driver.page_source)
+                f.close()
+        
         #driver.implicitly_wait(30)
-        unProducto = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, xpathBuscar)))
+        productoTestigo = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH, xpathBuscar)))
         print(f'La página terminó de cargar ok. Driver title: {driver.title}')
+        listaDeProductos = driver.find_elements_by_xpath(listadoDeProductos)
+        print('\n')
+        print('=' * 70)
+        print(f'La cantidad de productos leidos es: {len(listaDeProductos)}')
+        print('=' * 70)
+
+        if len(listaDeProductos) > 0:
+            fecha = datetime.now()
+            fechaISO = fecha.isoformat()
+            print('\n')
+            print('*' * 70)
+            for producto in listaDeProductos:
+                descripcion = producto.find_element_by_xpath(descripcionProducto).text
+                precio = producto.find_element_by_xpath(precioProducto).text
+                print(F'Descripcion: {descripcion}, {precio}')
+                print('-' * 70)
+                data = {'supermercado': supermercado, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
+                persisteDatos.guardaDatos(data, supermercado)
+            print('*' * 70)
+        return
     except TimeoutException: 
         print(f'Tiempo de espera agotado cargando la página "{url}" ')
-        driver.delete_all_cookies()
-        driver.quit()
+        #driver.delete_all_cookies()
+        #driver.quit()
 
-    listaDeProductos = driver.find_elements_by_xpath(listadoDeProductos)
-    print('\n')
-    print('=' * 70)
-    print(f'La cantidad de productos leidos es: {len(listaDeProductos)}')
-    print('=' * 70)
-
-    if len(listaDeProductos) > 0:
-        fecha = datetime.now()
-        fechaISO = fecha.isoformat()
-        print('\n')
-        print('*' * 70)
-        for producto in listaDeProductos:
-            descripcion = producto.find_element_by_xpath(descripcionProducto).text
-            precio = producto.find_element_by_xpath(precioProducto).text
-            print(F'Descripcion: {descripcion}, {precio}')
-            print('-' * 70)
-            data = {'supermercado': supermercado, 'fecha': fechaISO, 'descripcion': descripcion, 'precio': precio}
-            persisteDatos.guardaDatos(data, supermercado)
-        print('*' * 70)
+ 

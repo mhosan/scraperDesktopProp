@@ -1,49 +1,34 @@
+import buscar
+import driver
 import time
-import random
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
 
-url = 'https://www.disco.com.ar/leche?_q=leche&map=ft'
+driver = driver.seteoDriver()
 
-s = Service('./chromedriver.exe')
-options = webdriver.ChromeOptions()
-options.add_argument('--incognito')
-#options.add_argument('--headless')
-options.add_argument('--ignore-certificate-errors')
-driver = webdriver.Chrome(service=s, options=options)
+urlsOri = ['https://www.disco.com.ar/leche?_q=leche&map=ft',
+           'https://www.disco.com.ar/yerba?_q=yerba&map=ft',
+           'https://www.disco.com.ar/azucar?_q=azucar&map=ft',
+           'https://www.disco.com.ar/galletitas?_q=galletitas&map=ft',
+           'https://www.disco.com.ar/gaseosas?_q=gaseosas&map=ft',
+           'https://www.disco.com.ar/arroz?_q=arroz&map=ft',
+           'https://www.disco.com.ar/shampoo?_q=shampoo&map=ft',
+           'https://www.disco.com.ar/pollo?_q=pollo&map=ft'
+           ]
+urls = ['https://www.disco.com.ar/pollo?_q=pollo&map=ft'
 
-#driver.minimize_window()
-xpathBuscar ='//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
-#driver.set_page_load_timeout(30)
-try:
-    driver.get(url)
-    #driver.implicitly_wait(30)
-    unProducto = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, xpathBuscar)))
-    print(f'La página terminó de cargar ok. Driver title: {driver.title}')
-except TimeoutException: 
-    print(f'Tiempo de espera agotado cargando la página "{url}" ')
-    driver.delete_all_cookies()
-    driver.quit()
+        ]
 
-#Disco:
-listaDeProductos = driver.find_elements_by_xpath('//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]')
-print('\n')
-print('=' * 70)
-print(f'La cantidad de productos leidos es: {len(listaDeProductos)}')
-print('=' * 70)
-print('\n')
-print('*' * 70)
-for producto in listaDeProductos:
-    descripcion = producto.find_element_by_xpath('.//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]').text
-    precio = producto.find_element_by_xpath('.//div[@class="contenedor-precio"]/span').text
-    print(F'Descripcion: {descripcion}, {precio}')
-    print('-' * 70)
-print('*' * 70)
+for url in urls:
+    buscar.buscar(url, driver, "Disco")
+    time.sleep(5)
+# driver.quit()
 
-driver.delete_all_cookies()
-driver.quit()
-
+"""
+'https://www.disco.com.ar/leche?map=ft',
+'https://www.vea.com.ar/yerba?map=ft', 
+'https://www.vea.com.ar/azucar?map=ft',
+'https://www.vea.com.ar/galletitas?map=ft',
+'https://www.vea.com.ar/gaseosas?map=ft',
+'https://www.vea.com.ar/arroz?map=ft',
+'https://www.vea.com.ar/shampoo?map=ft',
+'https://www.vea.com.ar/pollo?map=ft'
+"""
