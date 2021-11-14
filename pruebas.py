@@ -10,13 +10,17 @@ import driver
 
 driver = driver.seteoDriver()
 
-productoTestigo = "//div[@class='search results']//div[@id='catalog-listing']//ul/li//a[@class='product-item-link']"
-listadoDeProductos = '//div[@class="search results"]//div[@id="catalog-listing"]//ul/li//div[@class="product details product-item-details box-info"]'
-stockDisponible = './/div[@class="name-rating"]//div[@class="stock available"]/span'
-#descripcionProducto = ".//a[@class='product-item-link']"
-precioProducto = ".//div[@class='price-box price-final_price']//span[@data-label='Incl. impuestos']/span[@class='price']"
+#Disco
+url = 'https://www.disco.com.ar/leche?_q=leche&map=ft'
 
-url = 'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=leche'
+productoTestigo = '//div[contains(@class,"vtex-flex-layout-0-x-flexColChild")]//div[@id="gallery-layout-container"]//div[contains(@class,"vtex-search-result-3-x-galleryItem")]//div[contains(@class,"vtex-product-summary-2-x-nameContainer")]//span'
+
+listadoDeProductos = '//div[contains(@class,"vtex-flex-layout-0-x-flexCol")]//div[contains(@class,"vtex-flex-layout-0-x-flexColChild")]//div[@id="gallery-layout-container"]//div[contains(@class,"vtex-search-result-3-x-galleryItem")]'
+
+#descripcionProducto = './/div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+descripcionProducto = '//div[contains(@class,"vtex-flex-layout-0-x-flexColChild")]//div[@id="gallery-layout-container"]//div[contains(@class,"vtex-search-result-3-x-galleryItem")]//div[contains(@class,"vtex-product-summary-2-x-nameContainer")]//span'
+
+precioProducto = './/div[@class="contenedor-precio"]/span'
 
 try:
     driver.get(url)
@@ -33,7 +37,6 @@ else:
     print(f'La página terminó de cargar ok. Driver title: {driver.title}')
     print('=' * 70, '\n')
     listaDeProductos = driver.find_elements_by_xpath(listadoDeProductos)
-    listadoDisponibles = driver.find_elements_by_xpath(stockDisponible)
     print('\n', '=' * 70)
     print(f'La cantidad de productos leidos es: {len(listaDeProductos)}')
     print('=' * 70, '\n')
@@ -42,14 +45,6 @@ else:
         fechaISO = fecha.isoformat()
         print('\n')
         print('*' * 70)
-        for i in range(len(listaDeProductos)):
-            producto = listaDeProductos[i]
-            print(f'{i + 1}.- Producto: {listaDeProductos[i].text}')
-            print(f'{i + 1}.- Stock disponible: {listadoDisponibles[i].text}')
-            descripcion = listaDeProductos[i].text
-            disponibilidad = listadoDisponibles[i].text
-            disponibilidad = disponibilidad.strip()
-            if disponibilidad == 'Disponible':
-                precio = producto.find_element_by_xpath(".//div[@class='price-box price-final_price']//span[@data-label='Incl. impuestos']/span[@class='price']").text
-                print(f'Precio: {precio}')
-
+        for producto in listaDeProductos:
+            descripcion = producto.find_element_by_xpath(descripcionProducto).text
+            print(f'Producto descripcion: {descripcion}')
