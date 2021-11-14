@@ -21,9 +21,9 @@ def buscar(url, driver, supermercado):
         precioProducto = './/div[@class="contenedor-precio"]/span'
     if supermercado == "Maxiconsumo":
         productoTestigo ="//div[@class='search results']//div[@id='catalog-listing']//ul/li//a[@class='product-item-link']"
-        listadoDeProductos = '//div[@class="search results"]//div[@id="catalog-listing"]//ul/li'
-        descripcionProducto = "//div[@class='search results']//div[@id='catalog-listing']//ul/li//a[@class='product-item-link']"
-        precioProducto = "//div[@class='search results']//div[@id='catalog-listing']//ul/li//div[@class='price-box price-final_price']//span[@class='price']"
+        listadoDeProductos = '//div[@class="search results"]//div[@id="catalog-listing"]//ul/li//div[@class="product details product-item-details box-info"]'
+        stockDisponible = './/div[@class="name-rating"]//div[@class="stock available"]/span'
+        precioProducto = ".//div[@class='price-box price-final_price']//span[@data-label='Incl. impuestos']/span[@class='price']"
 
     #driver.minimize_window()
     xpathBuscar = productoTestigo
@@ -49,12 +49,26 @@ def buscar(url, driver, supermercado):
             print('\n')
             print('*' * 70)
             for producto in listaDeProductos:
-                descripcion = producto.find_element_by_xpath(descripcionProducto).text
-                precio = producto.find_element_by_xpath(precioProducto).text
-                print(F'Descripcion: {descripcion}, {precio}')
-                print('-' * 70)
-                data = {'supermercado': supermercado, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
-                #persisteDatos.guardaDatos(data, supermercado)
+                
+                if supermercado == "Maxiconsumo":
+                    descripcion = producto.find_element_by_xpath(".//a[@class='product-item-link']").text
+                    disponibilidad = producto.find_element_by_xpath(stockDisponible).text
+                    disponibilidad = disponibilidad.strip()
+                    if disponibilidad == "Disponible":
+                        precio = producto.find_element_by_xpath(".//div[@class='price-box price-final_price']//span[@data-label='Incl. impuestos']/span[@class='price']").text    
+                        precio = precio.strip()
+                        precio = precio.replace('$', '')
+                    else:
+                        precio = "0"
+                else:
+                    descripcion = producto.find_element_by_xpath(descripcionProducto).text
+                    precio = producto.find_element_by_xpath(precioProducto).text
+                
+                if precio != "0":
+                    print(F'Descripcion: {descripcion}, {precio}')
+                    print('-' * 70)
+                    data = {'supermercado': supermercado, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
+                    #persisteDatos.guardaDatos(data, supermercado)
             print('*' * 70)
         return
     except TimeoutException: 
