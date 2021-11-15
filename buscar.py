@@ -21,7 +21,7 @@ def buscar(url, driver, supermercado):
         precioProducto = './/div[@class="contenedor-precio"]/span'
     if supermercado == "Maxiconsumo":
         productoTestigo ="//div[@class='search results']//div[@id='catalog-listing']//ul/li//a[@class='product-item-link']"
-        listadoDeProductos = '//div[@class="search results"]//div[@id="catalog-listing"]//ul/li'
+        listadoDeProductos = '//div[@class="search results"]//div[@id="catalog-listing"]//ul/li//div[@class="product details product-item-details box-info"]'
         descripcionProducto = "//div[@class='search results']//div[@id='catalog-listing']//ul/li//a[@class='product-item-link']"
         precioProducto = "//div[@class='search results']//div[@id='catalog-listing']//ul/li//div[@class='price-box price-final_price']//span[@class='price']"
 
