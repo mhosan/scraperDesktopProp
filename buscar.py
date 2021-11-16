@@ -57,7 +57,6 @@ def buscar(url, driver, supermercado):
                     if disponibilidad == "Disponible":
                         precio = producto.find_element_by_xpath(".//div[@class='price-box price-final_price']//span[@data-label='Incl. impuestos']/span[@class='price']").text    
                         precio = precio.strip()
-                        precio = precio.replace('$', '')
                     else:
                         precio = "0"
                 else:

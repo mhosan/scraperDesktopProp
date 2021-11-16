@@ -16,8 +16,11 @@ def guardaDatos(data, supermercado):
     precio = data['precio']
     if supermercado == "Dia":
         precio = precio[2:]
-    precio = precio.replace(',','.')
     precio = precio.replace('$','')
+    precio = precio.replace(',','.')
+    cuantosPuntos = precio.count('.')
+    if cuantosPuntos > 1:
+        precio = precio.replace('.','',1)
     precio = precio.strip()
     precioConvertido = float(precio)
     data['fecha'] = fechaConvertida
