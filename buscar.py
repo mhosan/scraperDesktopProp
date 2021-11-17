@@ -68,7 +68,7 @@ def buscar(url, driver, supermercado):
                     print(F'Descripcion: {descripcion}, {precio}')
                     print('-' * 70)
                     data = {'supermercado': supermercado, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
-                    #persisteDatos.guardaDatos(data, supermercado)
+                    persisteDatos.guardaDatos(data, supermercado)
             print('*' * 70)
         return
     except TimeoutException: 
