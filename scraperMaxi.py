@@ -12,9 +12,7 @@ urlsOri = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=lec
            'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=shampoo',
            'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=pollo'
            ]
-urls = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=leche',
-           'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=yerba',
-           'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=azucar'
+urls = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=azucar'
         ]
 
 for url in urls:
