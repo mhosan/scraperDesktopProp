@@ -16,7 +16,8 @@ def buscar(url, driver, supermercado):
         precioProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__price"]/span[@class="prateleira__best-price originalBestPrice"]'
     if supermercado == "Disco" or supermercado == "Vea":
         productoTestigo ='//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
-        listadoDeProductos = '//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]'
+        #listadoDeProductos = '//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]'
+        listadoDeProductos = '//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
         descripcionProducto = './/div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
         precioProducto = './/div[@class="contenedor-precio"]/span'
     if supermercado == "Maxiconsumo":
@@ -67,7 +68,7 @@ def buscar(url, driver, supermercado):
                     print(F'Descripcion: {descripcion}, {precio}')
                     print('-' * 70)
                     data = {'supermercado': supermercado, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
-                    #persisteDatos.guardaDatos(data, supermercado)
+                    persisteDatos.guardaDatos(data, supermercado)
             print('*' * 70)
         return
     except TimeoutException: 
