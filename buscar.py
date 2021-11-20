@@ -16,10 +16,9 @@ def buscar(url, driver, supermercado):
         precioProducto = './/div[@class="prateleira__content"]//a[@class="prateleira__price"]/span[@class="prateleira__best-price originalBestPrice"]'
     if supermercado == "Disco" or supermercado == "Vea":
         productoTestigo ='//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
-        #listadoDeProductos = '//div[@id="gallery-layout-container"]//div[@class="vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--grid pa4"]//a[@draggable="false"]'
-        listadoDeProductos = '//div[@id="gallery-layout-container"]//div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
+        listadoDeProductos = '//div[contains(@class,"pr0")]//div[contains(@class,"vtex-flex-layout-0-x-flexColChild")]//div[@class="vtex-flex-layout-0-x-flexRow"]//div[@id="gallery-layout-container"]//div[contains(@class,"vtex-search-result-3-x-galleryItem")]'
         descripcionProducto = './/div[contains(@class, "vtex-product-summary-2-x-nameContainer")]//span[contains(@class, "vtex-product-summary-2-x-productBrand")]'
-        precioProducto = './/div[@class="contenedor-precio"]/span'
+        precioProducto = './/div[@class="vtex-flex-layout-0-x-flexRow vtex-flex-layout-0-x-flexRow--mainRow-price-box"]//div[@class="contenedor-precio"]//span'
     if supermercado == "Maxiconsumo":
         productoTestigo ="//div[@class='search results']//div[@id='catalog-listing']//ul/li//a[@class='product-item-link']"
         listadoDeProductos = '//div[@class="search results"]//div[@id="catalog-listing"]//ul/li//div[@class="product details product-item-details box-info"]'
@@ -61,8 +60,12 @@ def buscar(url, driver, supermercado):
                     else:
                         precio = "0"
                 else:
-                    descripcion = producto.find_element_by_xpath(descripcionProducto).text
-                    precio = producto.find_element_by_xpath(precioProducto).text
+                    try:
+                        descripcion = producto.find_element_by_xpath(descripcionProducto).text
+                        precio = producto.find_element_by_xpath(precioProducto).text
+                    except:
+                        descripcion = "No encontrado"
+                        precio = "0"
                 
                 if precio != "0":
                     print(F'Descripcion: {descripcion}, {precio}')
