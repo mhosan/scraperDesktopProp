@@ -4,7 +4,7 @@ import time
 
 driver = driver.seteoDriver()
 
-urls = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=leche',
+urlsOri = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=leche',
            'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=yerba',
            'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=azucar',
            'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=galletitas',
@@ -12,11 +12,10 @@ urls = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=leche'
            'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=shampoo',
            'https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=pollo'
            ]
-urlsTest = ['https://maxiconsumo.com/sucursal_capital/catalogsearch/result/?q=azucar'
-        ]
+urls = ['https://www.argenprop.com/departamento-alquiler-localidad-la-plata-lp']
 
 for url in urls:
-    buscar.buscar(url, driver, "Maxiconsumo")
+    buscar.buscar(url, driver, "Argenprop")
     time.sleep(5)
 # driver.quit()
 
