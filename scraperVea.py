@@ -4,7 +4,7 @@ import time
 
 driver = driver.seteoDriver()
 
-urls = ['https://www.vea.com.ar/leche?map=ft',
+urlsOri = ['https://www.vea.com.ar/leche?map=ft',
            'https://www.vea.com.ar/yerba?map=ft',
            'https://www.vea.com.ar/azucar?map=ft',
            'https://www.vea.com.ar/galletitas?map=ft',
@@ -13,7 +13,7 @@ urls = ['https://www.vea.com.ar/leche?map=ft',
            'https://www.vea.com.ar/shampoo?map=ft',
            'https://www.vea.com.ar/pollo?map=ft'
            ]
-urlsTest = ['https://www.vea.com.ar/leche?map=ft'
+urls = [   'https://www.vea.com.ar/shampoo?map=ft',
         ]
 
 for url in urls:
