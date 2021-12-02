@@ -11,8 +11,9 @@ def buscar(url, driver, paginaPrincipal):
     
     productoTestigo = '//ul[@class="card__photos"]//img[@class="show"]'
     listadoDeProductos = '//div[@class="main__content"]//div[@class="listing-container"]//div[@class="listing__items"]//div[contains(@class, "listing__item")]'
-    descripcionProducto = './/ul[@class="card__main-features"]//span'
-    precioProducto = './/ul[@class="card__main-features"]//span' 
+    descripcionProducto = './/p[@class="card__title--primary"]'
+    descripcionProducto2 = './/p[@class="card__title"]'
+    superficieItem = './/ul[@class="card__main-features"]//span' 
 
     #driver.minimize_window()
     xpathBuscar = productoTestigo
@@ -40,16 +41,17 @@ def buscar(url, driver, paginaPrincipal):
             print('*' * 70)
             for producto in listaDeProductos:
                 try:
-                    #descripcion = producto.find_element_by_xpath(descripcionProducto).text
+                    descripcion = producto.find_element_by_xpath(descripcionProducto).text
+                    descripcion2 = producto.find_element_by_xpath(descripcionProducto2).text
                     #precio = producto.find_element_by_xpath(precioProducto).text
-                    superficie = producto.find_element_by_xpath(precioProducto).text
+                    superficie = producto.find_element_by_xpath(superficieItem).text
                 except:
-                    #descripcion = "No encontrado"
+                    descripcion = "No encontrado"
                     #precio = "0"
                     superficie = "0"
                 if superficie != "0":
-                    print(F'Superficie: {superficie}')
-                    print('-' * 70)
+                    print(F'{descripcion} - {descripcion2}, Superficie: {superficie}, ')
+                    print('-' * 120)
                     #data = {'Pagina ': paginaPrincipal, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
                     #persisteDatos.guardaDatos(data, paginaPrincipal)
                 
