@@ -2,6 +2,7 @@ from datetime import datetime
 from pymongo import MongoClient
 from pathlib import Path
 
+
 #conexión:
 #con = MongoClient('localhost',27017)  #conexión local
 #ca = Path(certifi.where())
