@@ -1,5 +1,4 @@
 from datetime import datetime
-import random
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException
@@ -45,12 +44,12 @@ def buscar(url, driver, paginaPrincipal):
                     descripcion2 = producto.find_element_by_xpath(descripcionProducto2).text
                     #precio = producto.find_element_by_xpath(precioProducto).text
                     superficie = producto.find_element_by_xpath(superficieItem).text
+                    id = producto.find_element_by_tag_name('a').get_attribute('data-item-card')
                 except:
                     descripcion = "No encontrado"
-                    #precio = "0"
                     superficie = "0"
                 if superficie != "0":
-                    print(F'{descripcion} - {descripcion2}, Superficie: {superficie}, ')
+                    print(F'{descripcion2}, Superficie: {superficie}, Id: {id}')
                     print('-' * 120)
                     #data = {'Pagina ': paginaPrincipal, 'fecha': fechaISO, 'descrip': descripcion, 'precio': precio}
                     #persisteDatos.guardaDatos(data, paginaPrincipal)
