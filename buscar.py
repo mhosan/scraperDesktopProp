@@ -1,5 +1,4 @@
 from datetime import datetime
-import random
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException
