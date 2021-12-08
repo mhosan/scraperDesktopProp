@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+
 def buscar(url, driver, paginaPrincipal):
     
     productoTestigo = '//ul[@class="card__photos"]//img[@class="show"]'
@@ -28,18 +29,16 @@ def buscar(url, driver, paginaPrincipal):
         #driver.implicitly_wait(30)
         productoTestigo = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH, xpathBuscar)))
         print(f'La página terminó de cargar ok. Driver title: {driver.title}')
-        
         listaDeProductos = driver.find_elements_by_xpath(listadoDeProductos)
-        print('\n')
         print('=' * 70)
-        print(f'La cantidad de productos leidos es: {len(listaDeProductos)}')
+        print(f'Cantidad de propiedades en esta página: {len(listaDeProductos)}')
         print('=' * 70)
         
         if len(listaDeProductos) > 0:
             fecha = datetime.now()
             fechaISO = fecha.isoformat()
-            print('\n')
-            print('*' * 70)
+            #print('\n')
+            #print('*' * 70)
             listaLinks = [] # Lista con las propiedades de la primer página
             for producto in listaDeProductos:
                 try:
@@ -62,8 +61,8 @@ def buscar(url, driver, paginaPrincipal):
                     data = {'Id ': id, 'fecha': fechaISO, 'descrip': descripcion2, 'superficie': superficie, 'link': linkDetallado}
                     listaLinks.append(data)
                     #persisteDatos.guardaDatos(data, paginaPrincipal)
-            print('*' * 70)
-            print(f'La cantidad de productos leidos es: {len(listaLinks)}')
+            #print('*' * 70)
+            #print(f'La cantidad de productos leidos es: {len(listaLinks)}')
             #print(listaLinks)
             
             for link in listaLinks:
@@ -80,8 +79,10 @@ def buscar(url, driver, paginaPrincipal):
                         print('=' * 72)
                         print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
                         for detalle in listaDeDetalles:
-                            descripcion = detalle.find_element_by_xpath(detallePropiedad).text
-                            print(f'{descripcion}')
+                            descripcion = detalle.find_element_by_xpath('//div[@class="property-description"]//section/ul[@class="property-features collapse"]/li/p').get_attribute('textContent')
+                            #descripcion = detalle.find_element_by_tag_name('p').get_attribute('data-item-card')
+                            #descripcion = detalle.find_element_by_class_name('property-features collapse')
+                            print(f'Descripcion: {descripcion}')
                     
             return
     except TimeoutException: 

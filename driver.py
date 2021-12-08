@@ -7,14 +7,14 @@ from selenium.webdriver.common.by import By
 
 def seteoDriver():
     
-    PROXY = "54.163.74.0:8888"
+    PROXY = "160.16.211.154:3128"
 
     s = Service('./chromedriver.exe')
     options = webdriver.ChromeOptions()
     options.add_argument('--incognito')
     #options.add_argument('--headless')
     options.add_argument('--ignore-certificate-errors')
-    #options.add_argument('--proxy-server=%s' % PROXY)
+    options.add_argument('--proxy-server=%s' % PROXY)
     driver = webdriver.Chrome(service=s, options=options)
     return driver
 
