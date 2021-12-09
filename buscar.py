@@ -5,6 +5,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from persisteDatos import guardaDatos
 
 
 def buscar(url, driver, paginaPrincipal):
@@ -61,15 +62,13 @@ def buscar(url, driver, paginaPrincipal):
                     data = {'Id ': id, 'fecha': fechaISO, 'descrip': descripcion2, 'superficie': superficie, 'link': linkDetallado}
                     listaLinks.append(data)
                     #persisteDatos.guardaDatos(data, paginaPrincipal)
-            #print('*' * 70)
-            #print(f'La cantidad de productos leidos es: {len(listaLinks)}')
-            #print(listaLinks)
-            
             for link in listaLinks:
                 for key, value in link.items():
                     if key == 'link':
                         print('\n\n')
                         print(f'{key}: {value}')
+                        linkCortado = value.split('--')
+                        idPropiedad = linkCortado[1].strip()
                         driver.get(value)
                         driver.implicitly_wait(30)
                         #driver.back() #para volver a la pagina principal
@@ -78,7 +77,7 @@ def buscar(url, driver, paginaPrincipal):
                         listaDeDetalles = driver.find_elements_by_xpath(detalle)
                         #print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
                         print('=' * 150)
-                        data = {}
+                        data = {'IdPropiedad ': idPropiedad, 'fecha': fechaISO}
                         for detalle in listaDeDetalles:
                             descripcion = detalle.find_elements_by_xpath(detallePropiedad)
                             for item in descripcion:
@@ -95,7 +94,8 @@ def buscar(url, driver, paginaPrincipal):
                                 print(f'---> {listaDetalle[0]} : {listaDetalle[1]}')
                                 data[listaDetalle[0]] = listaDetalle[1]
                             break
-                        print(f'data es : {data}')    
+                        #print(f'data es : {data}')
+                        guardaDatos(data)    
             return
     except TimeoutException: 
         print(f'Tiempo de espera agotado cargando la página "{url}" ')

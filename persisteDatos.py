@@ -9,21 +9,10 @@ from pathlib import Path
 #ca = certifi.where()
 con = MongoClient('mongodb+srv://admin:Ostruca1203@cluster0.rsnsq.mongodb.net/datosprueba?retryWrites=true&w=majority')
 db = con.datosprueba
-super = db.supermercados
+propiedades = db.propiedades
 
-def guardaDatos(data, supermercado):
+def guardaDatos(data):
     fecha = data['fecha']
     fechaConvertida = datetime.fromisoformat(fecha)
-    precio = data['precio']
-    if supermercado == "Dia":
-        precio = precio[2:]
-    precio = precio.replace('$','')
-    precio = precio.replace(',','.')
-    cuantosPuntos = precio.count('.')
-    if cuantosPuntos > 1:
-        precio = precio.replace('.','',1)
-    precio = precio.strip()
-    precioConvertido = float(precio)
     data['fecha'] = fechaConvertida
-    data['precio'] = precioConvertido
-    super.insert_one(data)
+    propiedades.insert_one(data)
