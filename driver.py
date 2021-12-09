@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 def seteoDriver():
     
-    PROXY = "160.16.211.154:3128"
+    PROXY = "78.138.99.76:1080"
 
     s = Service('./chromedriver.exe')
     options = webdriver.ChromeOptions()

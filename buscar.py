@@ -7,8 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from persisteDatos import guardaDatos
 
-
-def buscar(url, driver, paginaPrincipal):
+def buscar(url, driver, fuente):
     
     productoTestigo = '//ul[@class="card__photos"]//img[@class="show"]'
     listadoDeProductos = '//div[@class="main__content"]//div[@class="listing-container"]//div[@class="listing__items"]//div[contains(@class, "listing__item")]'
@@ -19,17 +18,21 @@ def buscar(url, driver, paginaPrincipal):
     detallePropiedad = '//div[@class="property-description"]//section/ul[@class="property-features collapse"]/li'
 
     #driver.minimize_window()
-    xpathBuscar = productoTestigo
     #driver.set_page_load_timeout(30)
     try:
         driver.get(url)
         #with open(f'paginaVeaLeche.txt', 'w', encoding='utf-8') as f:
         #        f.write(driver.page_source)
         #        f.close()
-        
         #driver.implicitly_wait(30)
-        productoTestigo = WebDriverWait(driver, 40).until(EC.presence_of_element_located((By.XPATH, xpathBuscar)))
+
+        #para ver si la página carga correctamente, dando un tiempo de espera de 30 segundos o un producto testigo
+        #para buscar, lo que ocurra primero. Si la página no carga sale por el except del try.
+        testearPageLoad = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, productoTestigo)))
         print(f'La página terminó de cargar ok. Driver title: {driver.title}')
+        localidad = driver.title[driver.title.rfind(" en")+4:len(driver.title)-12]
+        print(f'Localidad: {localidad}')
+        parada = input('Presione enter para continuar...')
         listaDeProductos = driver.find_elements_by_xpath(listadoDeProductos)
         print('=' * 70)
         print(f'Cantidad de propiedades en esta página: {len(listaDeProductos)}')
@@ -68,7 +71,7 @@ def buscar(url, driver, paginaPrincipal):
                         print('\n\n')
                         print(f'{key}: {value}')
                         linkCortado = value.split('--')
-                        idPropiedad = linkCortado[1].strip()
+                        idPropiedad = int(linkCortado[1].strip())
                         driver.get(value)
                         driver.implicitly_wait(30)
                         #driver.back() #para volver a la pagina principal
@@ -77,7 +80,7 @@ def buscar(url, driver, paginaPrincipal):
                         listaDeDetalles = driver.find_elements_by_xpath(detalle)
                         #print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
                         print('=' * 150)
-                        data = {'IdPropiedad ': idPropiedad, 'fecha': fechaISO}
+                        data = {'IdPropiedad ': idPropiedad, 'fuente' : fuente, 'fecha': fechaISO}
                         for detalle in listaDeDetalles:
                             descripcion = detalle.find_elements_by_xpath(detallePropiedad)
                             for item in descripcion:
@@ -94,9 +97,10 @@ def buscar(url, driver, paginaPrincipal):
                                 print(f'---> {listaDetalle[0]} : {listaDetalle[1]}')
                                 data[listaDetalle[0]] = listaDetalle[1]
                             break
-                        #print(f'data es : {data}')
-                        guardaDatos(data)    
+                        print(f'data es : {data}')
+                        #guardaDatos(data)    
             return
+    
     except TimeoutException: 
         print(f'Tiempo de espera agotado cargando la página "{url}" ')
         #driver.delete_all_cookies()
