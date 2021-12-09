@@ -14,7 +14,7 @@ def seteoDriver():
     options.add_argument('--incognito')
     #options.add_argument('--headless')
     options.add_argument('--ignore-certificate-errors')
-    options.add_argument('--proxy-server=%s' % PROXY)
+    #options.add_argument('--proxy-server=%s' % PROXY)
     driver = webdriver.Chrome(service=s, options=options)
     return driver
 

@@ -79,10 +79,23 @@ def buscar(url, driver, paginaPrincipal):
                         print('=' * 72)
                         print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
                         for detalle in listaDeDetalles:
-                            descripcion = detalle.find_element_by_xpath('//div[@class="property-description"]//section/ul[@class="property-features collapse"]/li/p').get_attribute('textContent')
-                            #descripcion = detalle.find_element_by_tag_name('p').get_attribute('data-item-card')
+                            descripcion = detalle.find_elements_by_xpath('//div[@class="property-description"]//section/ul[@class="property-features collapse"]/li')
+                            for item in descripcion:
+                                textoContenido = item.get_attribute('textContent')
+                                textoContenido = textoContenido.strip()
+                                textoContenido = textoContenido.replace('\n','')
+                                if ":" in textoContenido:
+                                    listaDetalle = textoContenido.split(':')
+                                    listaDetalle[0] = listaDetalle[0].strip()
+                                    listaDetalle[1] = listaDetalle[1].strip()
+                                else :
+                                    listaDetalle[0] = textoContenido
+                                    listaDetalle[1] = ''    
+                                print(f'{listaDetalle[0]} {listaDetalle[1]}')
+                            break    
+                            #descripcion = detalle.find_element_by_tag_name('p').get_attribute('data-item-card').get_attribute('textContent')
                             #descripcion = detalle.find_element_by_class_name('property-features collapse')
-                            print(f'Descripcion: {descripcion}')
+                            #print(f'Descripcion: {descripcion}')
                     
             return
     except TimeoutException: 
