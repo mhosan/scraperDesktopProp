@@ -15,7 +15,7 @@ def buscar(url, driver, paginaPrincipal):
     descripcionProducto2 = './/p[@class="card__title"]'
     superficieItem = './/ul[@class="card__main-features"]//span' 
     linkDetalle = './/a[contains(@id, "id-card")]'
-    detallePropiedad = '//div[@class="property-description"]//section/ul[@class="property-features collapse"]//p'
+    detallePropiedad = '//div[@class="property-description"]//section/ul[@class="property-features collapse"]/li'
 
     #driver.minimize_window()
     xpathBuscar = productoTestigo
@@ -67,8 +67,8 @@ def buscar(url, driver, paginaPrincipal):
             
             for link in listaLinks:
                 for key, value in link.items():
-                    #print(f'{key}: {value}')
                     if key == 'link':
+                        print('\n\n')
                         print(f'{key}: {value}')
                         driver.get(value)
                         driver.implicitly_wait(30)
@@ -76,10 +76,10 @@ def buscar(url, driver, paginaPrincipal):
                         detalle ='//div[@class="property-description"]//div[@class="property-features-title"]'
                         #driver.get(link)
                         listaDeDetalles = driver.find_elements_by_xpath(detalle)
-                        print('=' * 72)
-                        print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
+                        #print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
+                        print('=' * 150)
                         for detalle in listaDeDetalles:
-                            descripcion = detalle.find_elements_by_xpath('//div[@class="property-description"]//section/ul[@class="property-features collapse"]/li')
+                            descripcion = detalle.find_elements_by_xpath(detallePropiedad)
                             for item in descripcion:
                                 textoContenido = item.get_attribute('textContent')
                                 textoContenido = textoContenido.strip()
@@ -91,26 +91,13 @@ def buscar(url, driver, paginaPrincipal):
                                 else :
                                     listaDetalle[0] = textoContenido
                                     listaDetalle[1] = ''    
-                                print(f'{listaDetalle[0]} {listaDetalle[1]}')
+                                print(f'---> {listaDetalle[0]} {listaDetalle[1]}')
                             break    
-                            #descripcion = detalle.find_element_by_tag_name('p').get_attribute('data-item-card').get_attribute('textContent')
-                            #descripcion = detalle.find_element_by_class_name('property-features collapse')
-                            #print(f'Descripcion: {descripcion}')
-                    
             return
     except TimeoutException: 
         print(f'Tiempo de espera agotado cargando la página "{url}" ')
         #driver.delete_all_cookies()
         #driver.quit()
 
-def detalles(driver, link):
-    detalle ='//div[@class="property-description"]//div[@class="property-features-title"]'
-    driver.get(link)
-    listaDeDetalles = driver.find_elements_by_xpath(detalle)
-    print('\n')
-    print('=' * 70)
-    print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
-    print('=' * 70)
-    
 
 
