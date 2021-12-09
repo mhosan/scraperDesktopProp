@@ -78,21 +78,24 @@ def buscar(url, driver, paginaPrincipal):
                         listaDeDetalles = driver.find_elements_by_xpath(detalle)
                         #print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
                         print('=' * 150)
+                        data = {}
                         for detalle in listaDeDetalles:
                             descripcion = detalle.find_elements_by_xpath(detallePropiedad)
                             for item in descripcion:
                                 textoContenido = item.get_attribute('textContent')
                                 textoContenido = textoContenido.strip()
                                 textoContenido = textoContenido.replace('\n','')
-                                if ":" in textoContenido:
+                                if ":" in textoContenido: #existe clave - valor
                                     listaDetalle = textoContenido.split(':')
                                     listaDetalle[0] = listaDetalle[0].strip()
                                     listaDetalle[1] = listaDetalle[1].strip()
-                                else :
+                                else : #no existe clave - valor, hay un solo valor.
                                     listaDetalle[0] = textoContenido
-                                    listaDetalle[1] = ''    
-                                print(f'---> {listaDetalle[0]} {listaDetalle[1]}')
-                            break    
+                                    listaDetalle[1] = 'Si'    
+                                print(f'---> {listaDetalle[0]} : {listaDetalle[1]}')
+                                data[listaDetalle[0]] = listaDetalle[1]
+                            break
+                        print(f'data es : {data}')    
             return
     except TimeoutException: 
         print(f'Tiempo de espera agotado cargando la página "{url}" ')
