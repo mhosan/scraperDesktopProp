@@ -31,8 +31,6 @@ def buscar(url, driver, fuente):
         testearPageLoad = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, productoTestigo)))
         print(f'La página terminó de cargar ok. Driver title: {driver.title}')
         localidad = driver.title[driver.title.rfind(" en")+4:len(driver.title)-12]
-        print(f'Localidad: {localidad}')
-        parada = input('Presione enter para continuar...')
         listaDeProductos = driver.find_elements_by_xpath(listadoDeProductos)
         print('=' * 70)
         print(f'Cantidad de propiedades en esta página: {len(listaDeProductos)}')
@@ -80,7 +78,7 @@ def buscar(url, driver, fuente):
                         listaDeDetalles = driver.find_elements_by_xpath(detalle)
                         #print(f'La cantidad de items con detalles es: {len(listaDeDetalles)}')
                         print('=' * 150)
-                        data = {'IdPropiedad ': idPropiedad, 'fuente' : fuente, 'fecha': fechaISO}
+                        data = {'IdPropiedad ': idPropiedad, 'fuente' : fuente, 'localidad': localidad, 'fecha': fechaISO}
                         for detalle in listaDeDetalles:
                             descripcion = detalle.find_elements_by_xpath(detallePropiedad)
                             for item in descripcion:
@@ -97,8 +95,8 @@ def buscar(url, driver, fuente):
                                 print(f'---> {listaDetalle[0]} : {listaDetalle[1]}')
                                 data[listaDetalle[0]] = listaDetalle[1]
                             break
-                        print(f'data es : {data}')
-                        #guardaDatos(data)    
+                        #print(f'data : {data}')
+                        guardaDatos(data)    
             return
     
     except TimeoutException: 
