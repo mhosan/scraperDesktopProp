@@ -95,8 +95,8 @@ def buscar(url, driver, fuente):
                                 print(f'---> {listaDetalle[0]} : {listaDetalle[1]}')
                                 data[listaDetalle[0]] = listaDetalle[1]
                             break
-                        #print(f'data : {data}')
-                        guardaDatos(data)    
+                        print(f'data : {data}')
+                        #guardaDatos(data)    
             return
     
     except TimeoutException: 

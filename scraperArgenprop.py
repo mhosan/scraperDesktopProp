@@ -10,7 +10,10 @@ urlsOri = ['https://www.argenprop.com/departamento-venta-localidad-moron-mor',
 
 urls = ['https://www.argenprop.com/departamento-venta-localidad-moron-mor',
         'https://www.argenprop.com/departamento-venta-localidad-la-plata-lp',
-        'https://www.argenprop.com/departamento-venta-localidad-trenque-lauquen-tl',]
+        'https://www.argenprop.com/departamento-venta-localidad-trenque-lauquen-tl',
+        'https://www.argenprop.com/departamento-venta-localidad-pilar-pil',
+        'https://www.argenprop.com/departamento-venta-localidad-san-justo-lm',
+        'https://www.argenprop.com/departamento-venta-localidad-martinez']
 
 
 for url in urls:
